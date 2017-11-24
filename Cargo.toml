@@ -1,7 +1,7 @@
 [package]
 name = "fred"
 version = "0.1.0"
-authors = ["robin <robin@ansvia.com>"]
+authors = ["Robin Syihab <r@nosql.asia>"]
 
 [dependencies]
 zip = { version = "0.2", default-features = false }
