@@ -4,6 +4,8 @@ Document File Reader
 Simple Rust library to extract readable text from specific document format like Word Document (docx).
 Currently only support for docx, other format coming soon.
 
+Usage
+------
 
 ```rust
 let mut file = Docx::open("data/sample.docx").unwrap();
@@ -25,7 +27,7 @@ $ cargo test
 or run example:
 
 ```bash
-$ cargo run --example readdocx data/filosofi-logo.docx
+$ cargo run --example readdocx data/sample.docx
 ```
 
 [] Robin Sy.
