@@ -24,13 +24,21 @@ extern crate fred;
 
 use fred::Docx;
 use std::io::Read;
+use std::env;
 
 fn main(){
-    let mut file = Docx::open("data/sample.docx").unwrap();
-    let mut isi = String::new();
-    let _ = file.read_to_string(&mut isi);
-    println!("CONTENT:");
-    println!("----------BEGIN----------");
-    println!("{}", isi);
-    println!("----------EOF----------");
+
+    if let Some(path) = env::args().nth(1) {
+        let mut file = Docx::open(path).unwrap();
+        let mut isi = String::new();
+        let _ = file.read_to_string(&mut isi);
+        println!("CONTENT:");
+        println!("----------BEGIN----------");
+        println!("{}", isi);
+        println!("----------EOF----------");
+    }else{
+        println!("USAGE: readdocx [PATH-TO-DOCX-FILE]");
+    }
+
+
 }

@@ -1,3 +1,5 @@
+#![allow(unused_imports, dead_code, unused_must_use)]
+
 /**
  * Copyright 2017 Robin Syihab. All rights reserved.
  *
@@ -19,8 +21,6 @@
  *
  */
 
-
-#![allow(unused_imports, dead_code, unused_must_use)]
 
 extern crate zip;
 extern crate quick_xml as xml;
@@ -128,7 +128,7 @@ mod tests {
 
     #[test]
     fn instantiate(){
-        let _ = Docx::open(Path::new("./tmp"));
+        let _ = Docx::open(Path::new("data/filosofi-logo.docx"));
     }
 
     #[test]
