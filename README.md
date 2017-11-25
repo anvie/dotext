@@ -1,5 +1,5 @@
-Document File Reader
-=======================
+Document File Text Extractor
+=============================
 
 Simple Rust library to extract readable text from specific document format like Word Document (docx).
 Currently only support for docx and xlsx, other format coming soon.
