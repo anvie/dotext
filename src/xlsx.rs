@@ -7,6 +7,7 @@ use xml::events::Event;
 use std::path::{Path, PathBuf};
 use std::fs::File;
 use std::io::prelude::*;
+use std::io::Cursor;
 use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
@@ -15,8 +16,7 @@ use msdoc::MsDoc;
 
 pub struct Xlsx {
     path: PathBuf,
-    data: String,
-    offset: usize
+    data: Cursor<String>
 }
 
 impl MsDoc<Xlsx> for Xlsx {
@@ -35,10 +35,8 @@ impl MsDoc<Xlsx> for Xlsx {
                 let mut _buff = String::new();
                 c_file.read_to_string(&mut _buff);
                 xml_data += _buff.as_str();
-//                break
             }
         }
-
 
         let mut buf = Vec::new();
         let mut txt = Vec::new();
@@ -64,7 +62,6 @@ impl MsDoc<Xlsx> for Xlsx {
                     Ok(Event::Text(e)) => {
                         if to_read {
                             let text = e.unescape_and_decode(&xml_reader).unwrap();
-//                            println!("# {} #", text);
                             txt.push(text);
                             to_read = false;
                         }
@@ -79,8 +76,7 @@ impl MsDoc<Xlsx> for Xlsx {
         Ok(
             Xlsx {
                 path: path.as_ref().to_path_buf(),
-                data: txt.join(""),
-                offset: 0
+                data: Cursor::new(txt.join(""))
             }
         )
     }
@@ -88,23 +84,8 @@ impl MsDoc<Xlsx> for Xlsx {
 }
 
 impl Read for Xlsx {
-    fn read(&mut self, mut buf: &mut [u8]) -> io::Result<usize> {
-        let bytes = self.data.as_bytes();
-        let limit = if bytes.len() < self.offset + 10 {
-            bytes.len()
-        }else{
-            self.offset + 10
-        };
-
-        if self.offset > limit {
-            Ok(0)
-        }else{
-
-            let rv = buf.write(&bytes[self.offset..limit])?;
-//            println!("offset: {}, limit: {}, rv: {}", self.offset, limit, rv);
-            self.offset = self.offset + rv;
-            Ok(rv)
-        }
+    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        self.data.read(buf)
     }
 }
 

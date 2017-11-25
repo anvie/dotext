@@ -7,21 +7,20 @@ use xml::events::Event;
 use std::path::{Path, PathBuf};
 use std::fs::File;
 use std::io::prelude::*;
-use std::io::Bytes;
 use std::io::Cursor;
 use std::io;
 use std::clone::Clone;
-use std::borrow::Cow;
 use zip::read::ZipFile;
 
 use msdoc::MsDoc;
 
 pub struct Docx {
     path: PathBuf,
-    data: Cursor<Vec<u8>>,
+    data: Cursor<String>
 }
 
 impl MsDoc<Docx> for Docx {
+
     fn open<P: AsRef<Path>>(path: P) -> io::Result<Docx> {
         let file = File::open(path.as_ref())?;
         let mut archive = ZipArchive::new(file)?;
@@ -71,7 +70,7 @@ impl MsDoc<Docx> for Docx {
         Ok(
             Docx {
                 path: path.as_ref().to_path_buf(),
-                data: Cursor::new(txt.join("").as_bytes().to_vec())
+                data: Cursor::new(txt.join(""))
             }
         )
     }
