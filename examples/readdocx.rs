@@ -22,9 +22,11 @@
 
 extern crate fred;
 
-use fred::Docx;
+use fred::*;
+
 use std::io::Read;
 use std::env;
+
 
 fn main(){
 
