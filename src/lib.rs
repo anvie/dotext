@@ -29,8 +29,10 @@ extern crate quick_xml as xml;
 pub mod msdoc;
 pub mod docx;
 pub mod xlsx;
+pub mod pptx;
 
 
 pub use msdoc::MsDoc;
 pub use docx::Docx;
 pub use xlsx::Xlsx;
+pub use pptx::Pptx;

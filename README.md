@@ -2,7 +2,18 @@ Document File Text Extractor
 =============================
 
 Simple Rust library to extract readable text from specific document format like Word Document (docx).
-Currently only support for docx and xlsx, other format coming soon.
+Currently only support several format, other format coming soon.
+
+Supported Document
+-------------------------
+
+
+- [x] Microsoft Word (docx)
+- [x] Microsoft Excel (xlsx)
+- [x] Microsoft Power Point (pptx)
+- [ ] OpenOffice Writer (odt)
+
+
 
 Usage
 ------
