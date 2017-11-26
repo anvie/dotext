@@ -90,12 +90,12 @@ mod tests {
 
     #[test]
     fn instantiate(){
-        let _ = Docx::open(Path::new("data/filosofi-logo.docx"));
+        let _ = Docx::open(Path::new("samples/filosofi-logo.docx"));
     }
 
     #[test]
     fn read(){
-        let mut f = Docx::open(Path::new("data/filosofi-logo.docx")).unwrap();
+        let mut f = Docx::open(Path::new("samples/filosofi-logo.docx")).unwrap();
 
         let mut data = String::new();
         let len = f.read_to_string(&mut data).unwrap();

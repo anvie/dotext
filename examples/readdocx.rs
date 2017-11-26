@@ -31,7 +31,7 @@ use std::env;
 fn main(){
 
     if let Some(path) = env::args().nth(1) {
-        let mut file = Docx::open(path).unwrap();
+        let mut file = Docx::open(path).expect("Cannot open file");
         let mut isi = String::new();
         let _ = file.read_to_string(&mut isi);
         println!("CONTENT:");

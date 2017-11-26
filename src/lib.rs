@@ -30,6 +30,7 @@ pub mod msdoc;
 pub mod docx;
 pub mod xlsx;
 pub mod pptx;
+pub mod odt;
 
 
 pub use msdoc::MsDoc;

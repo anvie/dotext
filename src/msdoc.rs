@@ -15,7 +15,9 @@ use zip::read::ZipFile;
 
 
 pub trait MsDoc<T>: Read {
-
     fn open<P: AsRef<Path>>(path: P) -> io::Result<T>;
+}
 
+pub trait OpenOfficeDoc<T>: Read {
+    fn open<P: AsRef<Path>>(path: P) -> io::Result<T>;
 }

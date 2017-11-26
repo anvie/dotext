@@ -96,12 +96,12 @@ mod tests {
 
     #[test]
     fn instantiate(){
-        let _ = Xlsx::open(Path::new("data/sample.xlsx"));
+        let _ = Xlsx::open(Path::new("samples/sample.xlsx"));
     }
 
     #[test]
     fn read(){
-        let mut f = Xlsx::open(Path::new("data/sample.xlsx")).unwrap();
+        let mut f = Xlsx::open(Path::new("samples/sample.xlsx")).unwrap();
 
         let mut data = String::new();
         let len = f.read_to_string(&mut data).unwrap();
