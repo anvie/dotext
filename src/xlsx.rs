@@ -80,7 +80,6 @@ impl MsDoc<Xlsx> for Xlsx {
             }
         )
     }
-
 }
 
 impl Read for Xlsx {
