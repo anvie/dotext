@@ -37,3 +37,4 @@ pub use msdoc::MsDoc;
 pub use docx::Docx;
 pub use xlsx::Xlsx;
 pub use pptx::Pptx;
+pub use odt::Odt;
