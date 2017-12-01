@@ -12,7 +12,7 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
-use msdoc::MsDoc;
+use doc::MsDoc;
 
 pub struct Docx {
     path: PathBuf,

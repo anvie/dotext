@@ -14,6 +14,8 @@ Supported Document
 - [x] Microsoft Excel (xlsx)
 - [x] Microsoft Power Point (pptx)
 - [x] OpenOffice Writer (odt)
+- [x] OpenDocument Presentation (odp)
+- [ ] PDF
 
 
 

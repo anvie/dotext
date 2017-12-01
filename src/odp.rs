@@ -12,15 +12,16 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
-use doc::MsDoc;
+use doc::OpenOfficeDoc;
 
-pub struct Pptx {
+pub struct Odp {
     path: PathBuf,
     data: Cursor<String>
 }
 
-impl MsDoc<Pptx> for Pptx {
-    fn open<P: AsRef<Path>>(path: P) -> io::Result<Pptx> {
+impl OpenOfficeDoc<Odp> for Odp {
+
+    fn open<P: AsRef<Path>>(path: P) -> io::Result<Odp> {
         let file = File::open(path.as_ref())?;
         let mut archive = ZipArchive::new(file)?;
 
@@ -28,41 +29,40 @@ impl MsDoc<Pptx> for Pptx {
 
         for i in 0..archive.len(){
             let mut c_file = archive.by_index(i).unwrap();
-            if c_file.name().starts_with("ppt/slides") {
-                let mut _buff = String::new();
-                c_file.read_to_string(&mut _buff);
-                xml_data += _buff.as_str();
+            if c_file.name() == "content.xml" {
+                c_file.read_to_string(&mut xml_data);
+                break
             }
         }
+
+        let mut xml_reader = Reader::from_str(xml_data.as_ref());
 
         let mut buf = Vec::new();
         let mut txt = Vec::new();
 
         if xml_data.len() > 0 {
             let mut to_read = false;
-            let mut xml_reader = Reader::from_str(xml_data.as_ref());
             loop {
                 match xml_reader.read_event(&mut buf){
                     Ok(Event::Start(ref e)) => {
                         match e.name() {
-                            b"a:p" => {
+                            b"text:p" => {
                                 to_read = true;
-                                txt.push("\n".to_string());
+                                txt.push("\n\n".to_string());
                             },
-                            b"a:t" => {
+                            b"text:span" => {
                                 to_read = true;
-                            },
+                            }
                             _ => (),
                         }
                     },
                     Ok(Event::Text(e)) => {
                         if to_read {
-                            let text = e.unescape_and_decode(&xml_reader).unwrap();
-                            txt.push(text);
+                            txt.push(e.unescape_and_decode(&xml_reader).unwrap());
                             to_read = false;
                         }
                     },
-                    Ok(Event::Eof) => break, // exits the loop when reaching end of file
+                    Ok(Event::Eof) => break,
                     Err(e) => panic!("Error at position {}: {:?}", xml_reader.buffer_position(), e),
                     _ => (),
                 }
@@ -70,16 +70,15 @@ impl MsDoc<Pptx> for Pptx {
         }
 
         Ok(
-            Pptx {
+            Odp {
                 path: path.as_ref().to_path_buf(),
                 data: Cursor::new(txt.join(""))
             }
         )
     }
-
 }
 
-impl Read for Pptx {
+impl Read for Odp {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         self.data.read(buf)
     }
@@ -93,12 +92,12 @@ mod tests {
 
     #[test]
     fn instantiate(){
-        let _ = Pptx::open(Path::new("samples/sample.pptx"));
+        let _ = Odp::open(Path::new("samples/sample.odp"));
     }
 
     #[test]
     fn read(){
-        let mut f = Pptx::open(Path::new("samples/sample.pptx")).unwrap();
+        let mut f = Odp::open(Path::new("samples/sample.odp")).unwrap();
 
         let mut data = String::new();
         let len = f.read_to_string(&mut data).unwrap();

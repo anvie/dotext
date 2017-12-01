@@ -26,15 +26,16 @@ extern crate zip;
 extern crate quick_xml as xml;
 
 
-pub mod msdoc;
+pub mod doc;
 pub mod docx;
 pub mod xlsx;
 pub mod pptx;
 pub mod odt;
+pub mod odp;
 
-
-pub use msdoc::MsDoc;
+pub use doc::MsDoc;
 pub use docx::Docx;
 pub use xlsx::Xlsx;
 pub use pptx::Pptx;
 pub use odt::Odt;
+pub use odp::Odp;

@@ -12,7 +12,7 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
-use msdoc::OpenOfficeDoc;
+use doc::OpenOfficeDoc;
 
 pub struct Odt {
     path: PathBuf,
