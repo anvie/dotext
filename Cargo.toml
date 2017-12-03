@@ -2,6 +2,8 @@
 name = "fred"
 version = "0.1.0"
 authors = ["Robin Syihab <r@nosql.asia>"]
+description = "Simple Rust library to extract readable text from specific document format like Word Document (docx). Currently only support several format, other format coming soon."
+license = "MIT"
 
 [dependencies]
 zip = { version = "0.2", default-features = false }
