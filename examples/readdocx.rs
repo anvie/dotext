@@ -20,9 +20,9 @@
  */
 
 
-extern crate fred;
+extern crate dotext;
 
-use fred::*;
+use dotext::*;
 
 use std::io::Read;
 use std::env;
