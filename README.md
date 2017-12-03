@@ -2,6 +2,7 @@ Document File Text Extractor
 =============================
 
 [![Build Status](https://travis-ci.org/anvie/fred.svg?branch=master)](https://travis-ci.org/anvie/fred)
+[![Crates.io](https://img.shields.io/crates/v/dotext.svg)](https://crates.io/crates/dotext)
 
 Simple Rust library to extract readable text from specific document format like Word Document (docx).
 Currently only support several format, other format coming soon.
