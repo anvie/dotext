@@ -24,7 +24,7 @@ Usage
 ------
 
 ```rust
-let mut file = Docx::open("data/sample.docx").unwrap();
+let mut file = Docx::open("samples/sample.docx").unwrap();
 let mut isi = String::new();
 let _ = file.read_to_string(&mut isi);
 println!("CONTENT:");
