@@ -12,14 +12,25 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
-use doc::MsDoc;
+use doc::{MsDoc, HasKind};
 
 pub struct Pptx {
     path: PathBuf,
     data: Cursor<String>
 }
 
+impl HasKind for Pptx {
+    fn kind(&self) -> &'static str {
+        "Power Point"
+    }
+
+    fn ext(&self) -> &'static str {
+        "pptx"
+    }
+}
+
 impl MsDoc<Pptx> for Pptx {
+
     fn open<P: AsRef<Path>>(path: P) -> io::Result<Pptx> {
         let file = File::open(path.as_ref())?;
         let mut archive = ZipArchive::new(file)?;

@@ -12,11 +12,21 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
-use doc::OpenOfficeDoc;
+use doc::{OpenOfficeDoc, HasKind};
 
 pub struct Odt {
     path: PathBuf,
     data: Cursor<String>
+}
+
+impl HasKind for Odt {
+    fn kind(&self) -> &'static str {
+        "Open Office Document"
+    }
+    
+    fn ext(&self) -> &'static str {
+        "odt"
+    }
 }
 
 impl OpenOfficeDoc<Odt> for Odt {

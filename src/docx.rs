@@ -12,11 +12,21 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
-use doc::MsDoc;
+use doc::{MsDoc, HasKind};
 
 pub struct Docx {
     path: PathBuf,
     data: Cursor<String>
+}
+
+impl HasKind for Docx {
+    fn kind(&self) -> &'static str {
+        "Word Document"
+    }
+
+    fn ext(&self) -> &'static str {
+        "docx"
+    }
 }
 
 impl MsDoc<Docx> for Docx {

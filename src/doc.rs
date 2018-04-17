@@ -13,11 +13,19 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
+pub trait HasKind {
 
-pub trait MsDoc<T>: Read {
+    // kind
+    fn kind(&self) -> &'static str;
+
+    // extension
+    fn ext(&self) -> &'static str;
+}
+
+pub trait MsDoc<T>: Read + HasKind {
     fn open<P: AsRef<Path>>(path: P) -> io::Result<T>;
 }
 
-pub trait OpenOfficeDoc<T>: Read {
+pub trait OpenOfficeDoc<T>: Read + HasKind {
     fn open<P: AsRef<Path>>(path: P) -> io::Result<T>;
 }

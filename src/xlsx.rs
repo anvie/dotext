@@ -12,14 +12,25 @@ use std::io;
 use std::clone::Clone;
 use zip::read::ZipFile;
 
-use doc::MsDoc;
+use doc::{MsDoc, HasKind};
 
 pub struct Xlsx {
     path: PathBuf,
     data: Cursor<String>
 }
 
+impl HasKind for Xlsx {
+    fn kind(&self) -> &'static str {
+        "Excel"
+    }
+
+    fn ext(&self) -> &'static str {
+        "xlsx"
+    }
+}
+
 impl MsDoc<Xlsx> for Xlsx {
+
     fn open<P: AsRef<Path>>(path: P) -> io::Result<Xlsx> {
         let file = File::open(path.as_ref())?;
         let mut archive = ZipArchive::new(file)?;
