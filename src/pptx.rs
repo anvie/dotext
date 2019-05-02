@@ -1,22 +1,21 @@
-
 use zip::ZipArchive;
 
-use xml::reader::Reader;
 use xml::events::Event;
+use xml::reader::Reader;
 
-use std::path::{Path, PathBuf};
+use std::clone::Clone;
 use std::fs::File;
+use std::io;
 use std::io::prelude::*;
 use std::io::Cursor;
-use std::io;
-use std::clone::Clone;
+use std::path::{Path, PathBuf};
 use zip::read::ZipFile;
 
-use doc::{MsDoc, HasKind};
+use doc::{HasKind, MsDoc};
 
 pub struct Pptx {
     path: PathBuf,
-    data: Cursor<String>
+    data: Cursor<String>,
 }
 
 impl HasKind for Pptx {
@@ -30,14 +29,13 @@ impl HasKind for Pptx {
 }
 
 impl MsDoc<Pptx> for Pptx {
-
     fn open<P: AsRef<Path>>(path: P) -> io::Result<Pptx> {
         let file = File::open(path.as_ref())?;
         let mut archive = ZipArchive::new(file)?;
 
         let mut xml_data = String::new();
 
-        for i in 0..archive.len(){
+        for i in 0..archive.len() {
             let mut c_file = archive.by_index(i).unwrap();
             if c_file.name().starts_with("ppt/slides") {
                 let mut _buff = String::new();
@@ -53,18 +51,16 @@ impl MsDoc<Pptx> for Pptx {
             let mut to_read = false;
             let mut xml_reader = Reader::from_str(xml_data.as_ref());
             loop {
-                match xml_reader.read_event(&mut buf){
-                    Ok(Event::Start(ref e)) => {
-                        match e.name() {
-                            b"a:p" => {
-                                to_read = true;
-                                txt.push("\n".to_string());
-                            },
-                            b"a:t" => {
-                                to_read = true;
-                            },
-                            _ => (),
+                match xml_reader.read_event(&mut buf) {
+                    Ok(Event::Start(ref e)) => match e.name() {
+                        b"a:p" => {
+                            to_read = true;
+                            txt.push("\n".to_string());
                         }
+                        b"a:t" => {
+                            to_read = true;
+                        }
+                        _ => (),
                     },
                     Ok(Event::Text(e)) => {
                         if to_read {
@@ -72,22 +68,23 @@ impl MsDoc<Pptx> for Pptx {
                             txt.push(text);
                             to_read = false;
                         }
-                    },
+                    }
                     Ok(Event::Eof) => break, // exits the loop when reaching end of file
-                    Err(e) => panic!("Error at position {}: {:?}", xml_reader.buffer_position(), e),
+                    Err(e) => panic!(
+                        "Error at position {}: {:?}",
+                        xml_reader.buffer_position(),
+                        e
+                    ),
                     _ => (),
                 }
             }
         }
 
-        Ok(
-            Pptx {
-                path: path.as_ref().to_path_buf(),
-                data: Cursor::new(txt.join(""))
-            }
-        )
+        Ok(Pptx {
+            path: path.as_ref().to_path_buf(),
+            data: Cursor::new(txt.join("")),
+        })
     }
-
 }
 
 impl Read for Pptx {
@@ -96,19 +93,18 @@ impl Read for Pptx {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
-    use std::path::{Path, PathBuf};
     use super::*;
+    use std::path::{Path, PathBuf};
 
     #[test]
-    fn instantiate(){
+    fn instantiate() {
         let _ = Pptx::open(Path::new("samples/sample.pptx"));
     }
 
     #[test]
-    fn read(){
+    fn read() {
         let mut f = Pptx::open(Path::new("samples/sample.pptx")).unwrap();
 
         let mut data = String::new();

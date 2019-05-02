@@ -18,18 +18,14 @@
  * IN THE SOFTWARE.
  *
  */
-
-
 extern crate dotext;
 
 use dotext::*;
 
-use std::io::Read;
 use std::env;
+use std::io::Read;
 
-
-fn main(){
-
+fn main() {
     if let Some(path) = env::args().nth(1) {
         let mut file = Docx::open(path).expect("Cannot open file");
         let mut isi = String::new();
@@ -38,9 +34,7 @@ fn main(){
         println!("----------BEGIN----------");
         println!("{}", isi);
         println!("----------EOF----------");
-    }else{
+    } else {
         println!("USAGE: readdocx [PATH-TO-DOCX-FILE]");
     }
-
-
 }

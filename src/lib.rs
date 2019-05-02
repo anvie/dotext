@@ -1,5 +1,6 @@
 #![allow(unused_imports, dead_code, unused_must_use)]
 
+extern crate quick_xml as xml;
 /**
  * Copyright 2017 Robin Syihab. All rights reserved.
  *
@@ -20,24 +21,20 @@
  * IN THE SOFTWARE.
  *
  */
-
-
 extern crate zip;
-extern crate quick_xml as xml;
-
 
 pub mod doc;
 pub mod docx;
-pub mod xlsx;
-pub mod pptx;
-pub mod odt;
 pub mod odp;
 pub mod ods;
+pub mod odt;
+pub mod pptx;
+pub mod xlsx;
 
 pub use doc::MsDoc;
 pub use docx::Docx;
-pub use xlsx::Xlsx;
-pub use pptx::Pptx;
-pub use odt::Odt;
 pub use odp::Odp;
 pub use ods::Ods;
+pub use odt::Odt;
+pub use pptx::Pptx;
+pub use xlsx::Xlsx;
