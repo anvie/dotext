@@ -11,15 +11,13 @@ Currently only support several format, other format coming soon.
 Supported Document
 -------------------------
 
-
 - [x] Microsoft Word (docx)
 - [x] Microsoft Excel (xlsx)
 - [x] Microsoft Power Point (pptx)
 - [x] OpenOffice Writer (odt)
+- [x] OpenOffice Spreadsheet (ods)
 - [x] OpenDocument Presentation (odp)
 - [ ] PDF
-
-
 
 Usage
 ------
@@ -48,4 +46,3 @@ $ cargo run --example readdocx data/sample.docx
 ```
 
 [] Robin Sy.
-
