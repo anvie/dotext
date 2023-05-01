@@ -74,7 +74,16 @@ impl OpenOfficeDoc<Odp> for Odp {
         //                 }
         //             },
         //             Ok(Event::Eof) => break,
-        //             Err(e) => panic!("Error at position {}: {:?}", xml_reader.buffer_position(), e),
+        //             Err(e) => {
+        //                 return Err(io::Error::new(
+        //                    io::ErrorKind::Other,
+        //                    format!(
+        //                        "Error at position {}: {:?}",
+        //                        xml_reader.buffer_position(),
+        //                        e
+        //                    ),
+        //                ))
+        //            }
         //             _ => (),
         //         }
         //     }
