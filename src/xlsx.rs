@@ -75,11 +75,16 @@ impl MsDoc<Xlsx> for Xlsx {
                         }
                     }
                     Ok(Event::Eof) => break, // exits the loop when reaching end of file
-                    Err(e) => panic!(
-                        "Error at position {}: {:?}",
-                        xml_reader.buffer_position(),
-                        e
-                    ),
+                    Err(e) => {
+                        return Err(io::Error::new(
+                            io::ErrorKind::Other,
+                            format!(
+                                "Error at position {}: {:?}",
+                                xml_reader.buffer_position(),
+                                e
+                            ),
+                        ))
+                    }
                     _ => (),
                 }
             }
